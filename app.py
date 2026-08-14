@@ -16,7 +16,7 @@ if "messages" not in st.session_state:
 @st.cache_resource
 def load_pdf_to_gemini():
     # O nome do arquivo deve ser exatamente o mesmo que você subiu no GitHub
-    file_path = "manul.pdf"
+    file_path = "manual.pdf"
     uploaded_pdf = genai.upload_file(path=file_path, display_name="Manual_Em_Cache")
     
     while uploaded_pdf.state.name == "PROCESSING":
