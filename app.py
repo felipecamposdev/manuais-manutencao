@@ -29,7 +29,8 @@ try:
         pdf_file_uri = load_pdf_to_gemini()
     st.success("Sistema pronto! Digite o código de falha ou procedimento abaixo.")
 except Exception as e:
-    st.error(f"Erro: Não encontrei o arquivo 'manual.pdf' no servidor. Verifique o GitHub.")
+    # Agora o sistema vai mostrar o erro real que está acontecendo
+    st.error(f"Erro do sistema: {e}")
     st.stop()
 
 # Exibe o histórico do chat na tela
