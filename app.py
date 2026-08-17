@@ -48,7 +48,11 @@ if prompt := st.chat_input("Ex: Como resolver a falha E-04?"):
             # TRUQUE: Incorporamos a regra de comportamento direto no texto
             prompt_seguro = f"""Você é um assistente técnico especialista em manutenção industrial. 
 Responda à dúvida do técnico baseando-se EXCLUSIVAMENTE no documento PDF fornecido. 
-Se a informação não estiver no manual, diga exatamente: 'Essa informação não consta no manual.' 
+Se a informação não estiver no manual, diga exatamente: 'Essa informação não consta no manual.', e pergunte ao usuário se dejasa que a busca
+seja feita na internet, mas informe que a resposta pode conter erros.
+Quando perguntuado sobre produtividade, quantiade de peças por hora, sempre informa que a média é 800 peças por hora, considerando um tubo liso
+de 300 mm de comprimento e 5mm de largura, e que a quantidade de peças por hora depende de fatores como tipo de material, comprimento e largura do material,
+ajustes de velocidade de corte.
 Sempre destaque os alertas de segurança.
 
 Dúvida do técnico: {prompt}"""
