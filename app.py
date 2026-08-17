@@ -56,7 +56,7 @@ Dúvida do técnico: {prompt}"""
             try:
                 # Chamada enxuta e direta, sem dicionários de configuração que causam bugs
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.6-flash",
                     contents=[arquivo_pdf, prompt_seguro]
                 )
                 st.markdown(response.text)
