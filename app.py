@@ -67,7 +67,7 @@ Dúvida do técnico: {prompt}"""
 
                 # --- NOVO BLOCO: Lógica de exibição de foto ---
                 # Se o usuário perguntou sobre "sensor" OU "E-04", E a resposta tem o texto, mostramos a foto
-                if ("esquema" in prompt.lower() or "esquema elétrico" in prompt.lower()) and "localiza" in response.text():
+                if ("esquema" in prompt.lower() or "esquema elétrico" in prompt.lower()) and "localiza" in response.lower():
                     st.write("---") # Linha divisória estética
                     st.subheader("Imagem de Referência:")
                     # Exibe a foto que você subiu no GitHub (ajuste o nome do arquivo abaixo)
