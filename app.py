@@ -15,7 +15,7 @@ if "messages" not in st.session_state:
 @st.cache_resource
 def load_pdf_to_gemini():
     file_path = "manual.pdf"
-    uploaded_pdf = client.files.upload(file=file_path, display_name="Manual_Maquina")
+    uploaded_pdf = client.files.upload(file=file_path)
     
     # Aguarda o processamento do Google
     while uploaded_pdf.state.name == "PROCESSING":
