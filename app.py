@@ -16,7 +16,7 @@ if "messages" not in st.session_state:
 def load_pdf_to_gemini():
     # Envia o arquivo manual.pdf que está no GitHub
     file_path = "manual.pdf"
-    uploaded_pdf = client.files.upload(file=file_path, display_name="Manual_Maquina")
+    uploaded_pdf = client.files.upload(file=file_path)
     
     # Aguarda o processamento
     while uploaded_pdf.state.name == "PROCESSING":
