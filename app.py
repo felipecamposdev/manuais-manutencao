@@ -24,9 +24,9 @@ def load_pdf_to_gemini():
     return uploaded_pdf
 
 try:
-    with st.spinner("Iniciando sistemas e lendo o manual..."):
+    with st.spinner("Iniciando sistemas e Pensando..."):
         arquivo_pdf = load_pdf_to_gemini()
-    st.success("Sistema pronto! Digite o código de falha ou procedimento abaixo.")
+    st.success("Sistema pronto! O que desja saber hoje ? Digite o código de falha ou procedimento abaixo.")
 except Exception as e:
     st.error(f"Erro ao carregar PDF: {e}")
     st.stop()
@@ -43,7 +43,7 @@ if prompt := st.chat_input("Ex: Como resolver a falha E-04?"):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        with st.spinner("Buscando no manual..."):
+        with st.spinner("Pensando..."):
             
             # TRUQUE: Incorporamos a regra de comportamento direto no texto
             prompt_seguro = f"""Você é um assistente técnico especialista em manutenção industrial. 
