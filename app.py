@@ -63,11 +63,12 @@ Dúvida do técnico: {prompt}"""
                     model="gemini-3.6-flash",
                     contents=[arquivo_pdf, prompt_seguro]
                 )
+                texto_resposta = response.text
                 st.markdown(response.text)
 
                 # --- NOVO BLOCO: Lógica de exibição de foto ---
                 # Se o usuário perguntou sobre "sensor" OU "E-04", E a resposta tem o texto, mostramos a foto
-                if ("esquema" in prompt.lower() or "esquema elétrico" in prompt.lower()) and "localiza" in response.lower():
+                if ("esquema" in prompt.lower() or "esquema elétrico" in prompt.lower()) and "localiza" in texto_resposta.lower():
                     st.write("---") # Linha divisória estética
                     st.subheader("Imagem de Referência:")
                     # Exibe a foto que você subiu no GitHub (ajuste o nome do arquivo abaixo)
