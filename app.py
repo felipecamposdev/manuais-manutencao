@@ -47,7 +47,7 @@ if prompt := st.chat_input("Ex: Como resolver a falha E-04?"):
         with st.spinner("Buscando no manual..."):
             # Faz a pergunta usando o novo formato do SDK
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-1.5-flash",
                 contents=[pdf_file_uri, prompt],
                 config={
                     "system_instruction": "Você é um assistente técnico especialista. Responda APENAS com base no PDF. Se não estiver no manual, diga que não sabe. Destaque alertas de segurança.",
