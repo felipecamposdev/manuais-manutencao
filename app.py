@@ -5,7 +5,7 @@ import time
 st.set_page_config(page_title="Manual Interativo", page_icon="⚙️", layout="centered")
 st.title("🤖 Assistente de Manutenção")
 
-# Conecta a IA usando o novo formato oficial de cliente
+# Conecta a IA
 API_KEY = st.secrets["GEMINI_API_KEY"]
 client = genai.Client(api_key=API_KEY)
 
@@ -14,11 +14,10 @@ if "messages" not in st.session_state:
 
 @st.cache_resource
 def load_pdf_to_gemini():
-    # Envia o arquivo manual.pdf que está no GitHub
     file_path = "manual.pdf"
-    uploaded_pdf = client.files.upload(file=file_path)
+    uploaded_pdf = client.files.upload(file=file_path, display_name="Manual_Maquina")
     
-    # Aguarda o processamento
+    # Aguarda o processamento do Google
     while uploaded_pdf.state.name == "PROCESSING":
         time.sleep(2)
         uploaded_pdf = client.files.get(name=uploaded_pdf.name)
@@ -26,18 +25,18 @@ def load_pdf_to_gemini():
 
 try:
     with st.spinner("Iniciando sistemas e lendo o manual..."):
-        pdf_file_uri = load_pdf_to_gemini()
+        arquivo_pdf = load_pdf_to_gemini()
     st.success("Sistema pronto! Digite o código de falha ou procedimento abaixo.")
 except Exception as e:
-    st.error(f"Erro do sistema: {e}")
+    st.error(f"Erro ao carregar PDF: {e}")
     st.stop()
 
-# Exibe o histórico
+# Exibe o histórico de mensagens
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Caixa de pergunta
+# Caixa de pergunta do técnico
 if prompt := st.chat_input("Ex: Como resolver a falha E-04?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -45,14 +44,26 @@ if prompt := st.chat_input("Ex: Como resolver a falha E-04?"):
 
     with st.chat_message("assistant"):
         with st.spinner("Buscando no manual..."):
-            # Faz a pergunta usando o novo formato do SDK
-            response = client.models.generate_content(
-                model="gemini-1.5-flash",
-                contents=[pdf_file_uri, prompt],
-                config={
-                    "system_instruction": "Você é um assistente técnico especialista. Responda APENAS com base no PDF. Se não estiver no manual, diga que não sabe. Destaque alertas de segurança.",
-                }
-            )
-            st.markdown(response.text)
-    
-    st.session_state.messages.append({"role": "assistant", "content": response.text})
+            
+            # TRUQUE: Incorporamos a regra de comportamento direto no texto
+            prompt_seguro = f"""Você é um assistente técnico especialista em manutenção industrial. 
+Responda à dúvida do técnico baseando-se EXCLUSIVAMENTE no documento PDF fornecido. 
+Se a informação não estiver no manual, diga exatamente: 'Essa informação não consta no manual.' 
+Sempre destaque os alertas de segurança.
+
+Dúvida do técnico: {prompt}"""
+
+            try:
+                # Chamada enxuta e direta, sem dicionários de configuração que causam bugs
+                response = client.models.generate_content(
+                    model="gemini-1.5-flash",
+                    contents=[arquivo_pdf, prompt_seguro]
+                )
+                st.markdown(response.text)
+                
+                # Salva apenas a resposta final no histórico
+                st.session_state.messages.append({"role": "assistant", "content": response.text})
+                
+            except Exception as erro_ia:
+                # Se a IA recusar, mostra o erro no chat de forma amigável
+                st.error(f"Ocorreu um erro de comunicação com a IA: {erro_ia}")
