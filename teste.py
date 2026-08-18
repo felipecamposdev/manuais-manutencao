@@ -20,7 +20,7 @@ if enviar:
     if not descricao:
         st.warning("Por favor, preencha a descrição do problema.")
     else:
-        numero_whatsapp = "5511999999999"  # Altere para o número da manutenção
+        numero_whatsapp = "5511970816834"  # Altere para o número da manutenção
         
         texto_mensagem = f"""*🚨 NOVA ORDEM DE SERVIÇO (QR CODE)*
 * *Máquina:* {maquina}
