@@ -52,7 +52,7 @@ if enviar:
                     msg.add_attachment(dados_foto, maintype='image', subtype='jpeg', filename=nome_arquivo)
                 
                 # Conecta no servidor SMTP do e-mail e envia
-                with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                with smtplib.SMTP_SSL('smtp.hostinger.com', 465) as smtp:
                     smtp.login(email_remetente, senha_app)
                     smtp.send_message(msg)
                 
