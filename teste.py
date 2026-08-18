@@ -27,9 +27,9 @@ if enviar:
             try:
                 # Configuração do E-mail (Exemplo usando Gmail)
                 # Dica: No Gmail, utilize uma "Senha de App" (App Password) nas configurações de segurança da sua conta
-                email_remetente = "seu-email@gmail.com"
-                senha_app = "sua_senha_de_app_aqui"
-                email_destino = "manutencao@suafabrica.com"
+                email_remetente = "atendimento@automacel.com"
+                senha_app = "Cofat1234@"
+                email_destino = "felipe.campos@cofat.com"
                 
                 msg = EmailMessage()
                 msg['Subject'] = f"🚨 Nova OS: {maquina} - {tipo_problema}"
